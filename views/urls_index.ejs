@@ -26,8 +26,9 @@
           </tr>
         </thead>
         <tbody>
-          <form action="/urls/:shortURL/delete" method="POST">
-            <% for(let url in urls) { %>
+
+          <% for(let url in urls) { %>
+            <form action="/urls/<%=url%>/delete" method="POST">
               <tr>
                 <td>
                   <%= url %>
@@ -39,8 +40,9 @@
                   <button type="submit" class="btn btn-danger">Delete</button>
                 </td>
               </tr>
-              <% } %>
-          </form>
+            </form>
+            <% } %>
+
         </tbody>
       </table>
     </main>

@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const morgan = require('morgan');
 
 const app = express();
 const PORT = 8080;
@@ -13,8 +14,9 @@ app.set('view engine', 'ejs');
 
 app.use(bodyParser.urlencoded({extended:false})) 
 app.use(bodyParser.json());
+app.use(morgan('dev'));
 
-
+//GET endpoint
 app.get("/", (req, res) => {
   //res.render('pages/index');
 });
@@ -37,6 +39,7 @@ app.get("/u/:shortURL", (req, res) => {
   res.redirect(urlDatabase[req.params.shortURL]);
 });
 
+//POST endpoint
 app.post("/urls", (req, res) => {
   const shortURL = generateRandomString();
   urlDatabase[shortURL] = req.body.longURL;
