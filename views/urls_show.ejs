@@ -21,7 +21,16 @@
             <%= shortURL %>
           </a></p>
       </div>
-      <div class="card-footer text-muted"></div>
+      <div class="card bg-light ">
+        <div class="card-body">
+          <h5 class="card-title">Edit
+          </h5>
+          <p class="card-text">New URL: <a href="/u/<%= shortURL %>">
+              <%= shortURL %>
+            </a></p>
+        </div>
+      </div>
+
     </div>
     <!-- Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
@@ -36,3 +45,4 @@
 </body>
 
 </html>
+
