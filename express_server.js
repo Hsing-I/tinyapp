@@ -84,11 +84,11 @@ app.post("/login", (req, res) => {
     res.redirect("/login");
   }else if (!verifyEmail(users, email)) {
     console.log("email does not exists");
-    res.statusCode = 400;
+    res.statusCode = 403;
     res.redirect("/login");
   }else if (!passwordMatching(users, email, password)){
     console.log("wrong password");
-    res.statusCode = 400;
+    res.statusCode = 403;
     res.redirect("/login");
   }else{
     const id = fetchId(users, email, password);
