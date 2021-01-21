@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const cookieSession = require('cookie-session');
 const bcrypt = require('bcrypt');
+const methodOverride = require('method-override');
 const { urlDatabase, users } = require('./db/data');
 const { emailExists, fetchUser, passwordMatching, getUserByEmail, fetchId, urlsForUser } = require('./helpers/userHelpers');
 
@@ -18,6 +19,7 @@ app.use(cookieSession({
   name: 'session',
   keys: ['key1', 'key2']
 }));
+app.use(methodOverride('_method'));
 
 //GET endpoint
 app.get("/", (req, res) => {
@@ -95,7 +97,7 @@ app.post("/urls", (req, res) => {
 });
 
 //delete url, logged in user allow
-app.post("/urls/:shortURL/delete", (req, res) => {
+app.delete("/urls/:shortURL", (req, res) => {
   const isLoggedIn = req.session.user_id ? true : false;
   if (isLoggedIn) {
     delete urlDatabase[req.params.shortURL];
@@ -106,10 +108,16 @@ app.post("/urls/:shortURL/delete", (req, res) => {
 });
 
 //edit url, logged in user allow
-app.post("/urls/:shortURL", (req, res) => {
+app.put("/urls/:shortURL", (req, res) => {
   const isLoggedIn = req.session.user_id ? true : false;
   if (isLoggedIn) {
-    urlDatabase[req.params.shortURL].longURL = req.body.newURL;
+    const longURL = req.body.newURL;
+    const userID = req.session.user_id;
+    const editURL = {
+      longURL, 
+      userID 
+    }
+    urlDatabase[req.params.shortURL] = editURL;
     res.redirect("/urls");
   } else {
     res.redirect("/urls");

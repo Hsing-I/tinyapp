@@ -19,7 +19,6 @@
           <h3>Sorry! You don't have access to this page</h3>
           <%} else { %>
             <div class="card text-center">
-              <div class="card-header"></div>
               <div class="card-body">
                 <h5 class="card-title">TinyURL for: <%= longURL %>
                 </h5>
@@ -30,7 +29,7 @@
               <div class="card-footer">
                 <h5 class="card-title">Edit
                 </h5>
-                <form action="/urls/<%= shortURL %>" method="POST">
+                <form action="/urls/<%= shortURL %>?_method=PUT" method="POST">
                   <label for="newURL">New URL:</label>
                   <input type="text" name="newURL" placeholder="http://" style="width: 200px;">
                   <button type="submit" class="btn btn-primary">Submit</button>
