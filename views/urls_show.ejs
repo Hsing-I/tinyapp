@@ -15,7 +15,7 @@
     <main style="margin: 1em;">
       <% if(!isLoggedIn){ %>
         <h3>Please Login First!</h3>
-        <% } else if (isLoggedIn && (urlDatabase[shortURL].id !== user.id)) { %>
+        <% } else if (isLoggedIn && urlDatabase[shortURL] && (urlDatabase[shortURL].userID !== user.id)) { %>
           <h3>Sorry! You don't have access to this page</h3>
           <%} else { %>
             <div class="card text-center">
