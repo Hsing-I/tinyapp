@@ -1,3 +1,4 @@
+const bcrypt = require('bcrypt');
 const { urlDatabase, users } = require('../db/data');
 
 const emailExists = (users, id, email) => {
@@ -20,8 +21,9 @@ const verifyEmail = (users, email) => {
 }
 
 const passwordMatching = (users, email, password) =>{
+  const hashedPassword = users[user].password;
   for(user in users){
-    if(users[user].email === email && users[user].password === password){
+    if(users[user].email === email && bcrypt.compareSync(password, hashedPassword)){
       return true;
     }
   }
@@ -32,14 +34,25 @@ const fetchUser = (users, id) => {
   return users[id] ? users[id] : {};
 }
 
-const fetchId = (user, email, password) => {
+const fetchId = (email, password) => {
+  const hashedPassword = users[user].password;
   for(const user in users){
-    if(users[user].email === email && users[user].password === password){
+    if(users[user].email === email && bcrypt.compareSync(password, hashedPassword)){
       return users[user].id;
     }
   }
   return 0;
 }
 
+const urlsForUser = (urlDatabase, id) => {
+  const results = {};
+  for(url in urlDatabase){
+    if(urlDatabase[url].userID === id){
+      results[url] = urlDatabase[url]; 
+    }
+  }
+  return results;
+}
 
-module.exports= { emailExists, fetchUser, passwordMatching, verifyEmail, fetchId };
+
+module.exports= { emailExists, fetchUser, passwordMatching, verifyEmail, fetchId, urlsForUser };
